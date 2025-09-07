@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Queries Master - Jay Thakur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #27ae60;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --sql: #336791;
+            --hackerrank: #00EA64;
+            --leetcode: #FFA116;
+            --codechef: #5B4638;
+            --healthcare: #27ae60;
+            --data-analyst: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .btn-sql {
+            background-color: var(--sql);
+        }
+        
+        .btn-sql:hover {
+            background-color: #2a506d;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 15px auto 0;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a i {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            width: 220px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        nav ul li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown li {
+            margin: 0;
+            width: 100%;
+        }
+        
+        .dropdown li a {
+            padding: 12px 20px;
+            display: block;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .dropdown li:last-child a {
+            border-bottom: none;
+        }
+        
+        .dropdown li a i {
+            margin-right: 10px;
+        }
+        
+        .sql-dropdown {
+            color: var(--sql);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--secondary);
+            margin-bottom: 30px;
+        }
+        
+        /* SQL Queries Container */
+        .sql-queries-container {
+            margin-top: 40px;
+        }
+        
+        .sql-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sql-section h3 {
+            color: var(--sql);
+            border-bottom: 2px solid var(--sql);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .table-schema {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--sql);
+        }
+        
+        .sql-query-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .sql-question {
+            background: #f5f7fa;
+            padding: 20px;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .sql-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 0;
+        }
+        
+        .sql-code code {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Platform Tags */
+        .platform-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+            color: white;
+        }
+        
+        .hackerrank-tag {
+            background-color: var(--hackerrank);
+            color: #000;
+        }
+        
+        .leetcode-tag {
+            background-color: var(--leetcode);
+        }
+        
+        .codechef-tag {
+            background-color: var(--codechef);
+        }
+        
+        .namastesql-tag {
+            background-color: #FF6B6B;
+        }
+        
+        /* Difficulty Tags */
+        .difficulty-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .easy {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .medium {
+            background-color: #FFF8E1;
+            color: #F57C00;
+        }
+        
+        .hard {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+        
+        /* Certification Section */
+        .certification-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .certification-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .certification-badge {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        
+        .certification-section {
+            margin-bottom: 40px;
+        }
+        
+        .certification-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--sql);
+        }
+        
+        .certification-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .hacker-text {
+            color: var(--hackerrank);
+            font-weight: bold;
+        }
+        
+        .rank-text {
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .certification-description {
+            margin-bottom: 20px;
+            padding-left: 55px;
+        }
+        
+        .query-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        .query-question {
+            background: #f5f7fa;
+            padding: 20px;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .query-solution {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        /* Tabs for Query Types */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .tab:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .tab:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .tab.active {
+            background: var(--sql);
+            color: white;
+            border-color: var(--sql);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .footer-contact a {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-contact a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .footer-links a {
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Consistent hover colors for Data Analyst links */
+        a.analyst-dropdown:hover,
+        a[href*="data-analyst"]:hover,
+        a[href*="data-analyst-profile"]:hover {
+            color: var(--data-analyst) !important;
+        }
+
+        /* Consistent hover colors for Integration Engineer links */
+        a.healthcare-dropdown:hover,
+        a[href*="integration-engineer"]:hover,
+        a[href*="integration-engineer-profile"]:hover {
+            color: var(--healthcare) !important;
+        }
+
+        /* Keep button text white on hover */
+        .btn:hover,
+        .btn-healthcare:hover,
+        .btn-analyst:hover {
+            color: white !important;
+        }
+
+        /* Footer link hover colors */
+        footer a.analyst-dropdown:hover,
+        footer a[href*="data-analyst"]:hover {
+            color: var(--data-analyst) !important;
+        }
+
+        footer a.healthcare-dropdown:hover,
+        footer a[href*="integration-engineer"]:hover {
+            color: var(--healthcare) !important;
+        }
+
+        /* New styles for sub-sections */
+        .sql-keyword {
+            color: #f92672;
+        }
+
+        .sql-function {
+            color: #66d9ef;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .sql-subsection {
+            margin-top: 30px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 15px;
+        }
+        
+        .sql-subsection h4 {
+            color: var(--sql);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sql-subsection h4 i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .subsection-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        /* SQL Concepts Section */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .concept-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .concept-icon {
+            font-size: 40px;
+            color: var(--sql);
+            margin-bottom: 20px;
+        }
+        
+        /* Platform Cards */
+        .platform-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .platform-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .platform-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .hackerrank .platform-icon {
+            color: var(--hackerrank);
+        }
+        
+        .leetcode .platform-icon {
+            color: var(--leetcode);
+        }
+        
+        .codechef .platform-icon {
+            color: var(--codechef);
+        }
+        
+        .btn-hackerrank {
+            background-color: var(--hackerrank);
+            color: #000;
+        }
+        
+        .btn-leetcode {
+            background-color: var(--leetcode);
+        }
+        
+        .btn-codechef {
+            background-color: var(--codechef);
+            color: white;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-contact,
+            .footer-links {
+                text-align: center;
+            }
+            
+            .footer-contact a {
+                justify-content: center;
+            }
+            
+            .header-container {
+                padding: 15px;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 10px;
+                margin-left: 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+            
+            .tab:first-child, .tab:last-child {
+                border-radius: 5px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-contact,
+            .footer-links {
+                text-align: center;
+            }
+            
+            .footer-contact a {
+                justify-content: center;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .modal .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Jay <span>Thakur</span></div>
+            <nav>
+                <ul id="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                            <a href="#" class="popup-trigger" data-modal="profilesModal">
+                                Profiles <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="popup-trigger" data-modal="projectsModal">
+                                Projects <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </li>
+                    </li>   
+                    <li>
+                        <a href="#resume">Resume <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li>
+                                <a href="#" class="resume-link healthcare-dropdown" data-role="integration">
+                                    <i class="fas fa-hospital"></i> Integration Engineer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="resume-link analyst-dropdown" data-role="analyst">
+                                    <i class="fas fa-chart-line"></i> Data Analyst
+                                </a>
+                            </li>
+                        </ul>
+                    </li>                    
+                    <li><a href="#footer">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-btn" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">SQL Queries Master</h1>
+            <h2 class="hero-subtitle">Comprehensive Collection of SQL Solutions</h2>
+            <p>Explore my SQL solutions from HackerRank, LeetCode, and other platforms, demonstrating proficiency in database querying and problem-solving.</p>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="tabs-section">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="basic">Basic SQL Queries</div>
+                <div class="tab" data-tab="certification">Certification SQL Queries</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basic SQL Queries Section -->
+    <section id="basic-sql" class="sql-queries">
+        <div class="container">
+            <h2 class="section-title">Basic SQL Queries</h2>
+            <p class="section-description" style="text-align: center; margin-bottom: 40px;">
+                This section contains solutions to Basic SQL questions from different websites like Hackerrank, NamasteSQL, etc. demonstrating fundamental SQL proficiency.
+            </p>
+            
+            <div class="sql-queries-container">
+                <!-- CITY Table Queries -->
+                <div class="sql-section">
+                    <h3>
+                        <span class="platform-tag hackerrank-tag">HackerRank</span>
+                        City Table Queries
+                    </h3>
+                    <p class="table-schema"><strong>Table Schema:</strong> City (ID NUMBER, Name VARCHAR(17), Countrycode VARCHAR(3), District VARCHAR(20), Population NUMBER)</p>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-filter"></i> Filtering Queries</h4>
+                        <p class="subsection-description">Queries that demonstrate filtering data using WHERE clause with various conditions</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query all columns for all American cities in the CITY table with populations larger than 100,000. The CountryCode for America is USA.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> id, name, countrycode, district, population
+<span class="sql-keyword">FROM</span> city
+<span class="sql-keyword">WHERE</span> countrycode = <span class="sql-string">'USA'</span>
+<span class="sql-keyword">AND</span> population > 100000;</code></pre>
+                        </div>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> id, name, countrycode, district, population
+<span class="sql-keyword">FROM</span> city
+<span class="sql-keyword">WHERE</span> countrycode = <span class="sql-string">'JPN'</span>;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-calculator"></i> Aggregate Function Queries</h4>
+                        <p class="subsection-description">Queries using aggregate functions like COUNT, SUM, AVG, MAX, MIN</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query a count of the number of cities in CITY having a Population larger than 100,000.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+    <span class="sql-function">COUNT</span>(name)
+<span class="sql-keyword">FROM</span>
+    city
+<span class="sql-keyword">WHERE</span>
+    population > 100000;</code></pre>
+                        </div>
+
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the total population of all cities in CITY where District is California.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+    <span class="sql-function">SUM</span>(population) <span class="sql-keyword">AS</span> totalPop
+<span class="sql-keyword">FROM</span>
+    city
+<span class="sql-keyword">WHERE</span>
+    district = <span class="sql-string">'California'</span>;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-sort-amount-down"></i> Sorting and Limiting Queries</h4>
+                        <p class="subsection-description">Queries that demonstrate ordering results and limiting output</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the names of all Japanese cities in alphabetical order.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> name
+<span class="sql-keyword">FROM</span> city
+<span class="sql-keyword">WHERE</span> countrycode = <span class="sql-string">'JPN'</span>
+<span class="sql-keyword">ORDER BY</span> name <span class="sql-keyword">ASC</span>;</code></pre>
+                        </div>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the top 5 most populated cities in the database.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> name, population
+<span class="sql-keyword">FROM</span> city
+<span class="sql-keyword">ORDER BY</span> population <span class="sql-keyword">DESC</span>
+<span class="sql-keyword">LIMIT</span> 5;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Observation Station Table Queries -->
+                <div class="sql-section">
+                    <h3>
+                        <span class="platform-tag hackerrank-tag">HackerRank</span>
+                        Weather Observation Station Table Queries
+                    </h3>
+                    <p class="table-schema"><strong>Table Schema:</strong> Station (ID Number, City VARCHAR2(21), State VARCHAR2(2), LAT_N NUMBER, LONG_W NUMBER)</p>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-text-width"></i> String Pattern Queries</h4>
+                        <p class="subsection-description">Queries that use string functions and pattern matching with LIKE operator</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> <span class="sql-keyword">DISTINCT</span> city
+<span class="sql-keyword">FROM</span> station
+<span class="sql-keyword">WHERE</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'a%'</span> 
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'e%'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'i%'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'o%'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'u%'</span>;</code></pre>
+                        </div>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> <span class="sql-keyword">DISTINCT</span> city
+<span class="sql-keyword">FROM</span> station
+<span class="sql-keyword">WHERE</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'%a'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'%e'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'%i'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'%o'</span>
+    <span class="sql-keyword">OR</span> <span class="sql-function">LOWER</span>(city) <span class="sql-keyword">LIKE</span> <span class="sql-string">'%u'</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-calculator"></i> Mathematical Function Queries</h4>
+                        <p class="subsection-description">Queries using mathematical functions for calculations</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the following two values from the STATION table: The sum of all values in LAT_N rounded to 2 decimal places. The sum of all values in LONG_W rounded to 2 decimal places.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+    <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> 
+    <span class="sql-function">ROUND</span>(<span class="sql-function">SUM</span>(LAT_N), 2) <span class="sql-keyword">AS</span> sum_lat_n,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">SUM</span>(LONG_W), 2) <span class="sql-keyword">AS</span> sum_long_w
+<span class="sql-keyword">FROM</span> station;</code></pre>
+                        </div>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Query the average population for all cities in CITY, rounded down to the nearest integer.
+                                <span class="difficulty-tag easy">Easy</span>
+                            </div>
+    <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(population), 0) <span class="sql-keyword">AS</span> avg_population
+<span class="sql-keyword">FROM</span>
+    city;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complex Query Examples Section -->
+                <div class="sql-section">
+                    <h3>
+                        <span class="platform-tag leetcode-tag">LeetCode</span>
+                        Complex Query Examples
+                    </h3>
+                    <p class="table-schema"><strong>Table Schema:</strong> Employees (employee_id INT, first_name VARCHAR(50), last_name VARCHAR(50), salary DECIMAL(10,2), department_id INT)</p>
+                    <p class="table-schema"><strong>Table Schema:</strong> Departments (department_id INT, department_name VARCHAR(50))</p>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-layer-group"></i> Common Table Expressions (CTEs)</h4>
+                        <p class="subsection-description">Queries using CTEs for complex data retrieval</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Find employees who have the highest salary in each department.
+                                <span class="difficulty-tag medium">Medium</span>
+                            </div>
+    <pre class="sql-code"><code><span class="sql-keyword">WITH</span> DepartmentMaxSalaries <span class="sql-keyword">AS</span> (
+    <span class="sql-keyword">SELECT</span>
+        department_id,
+        <span class="sql-function">MAX</span>(salary) <span class="sql-keyword">AS</span> max_salary
+    <span class="sql-keyword">FROM</span> employees
+    <span class="sql-keyword">GROUP BY</span> department_id
+)
+<span class="sql-keyword">SELECT</span>
+    e.first_name,
+    e.last_name,
+    e.department_id,
+    e.salary,
+    d.department_name
+<span class="sql-keyword">FROM</span> employees e
+<span class="sql-keyword">JOIN</span> departments d <span class="sql-keyword">ON</span> e.department_id = d.department_id
+<span class="sql-keyword">JOIN</span> DepartmentMaxSalaries dms <span class="sql-keyword">ON</span> e.department_id = dms.department_id
+    <span class="sql-keyword">AND</span> e.salary = dms.max_salary
+<span class="sql-keyword">ORDER BY</span> e.department_id;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-window-restore"></i> Window Functions</h4>
+                        <p class="subsection-description">Queries using window functions for advanced analytics</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Rank employees by salary within each department.
+                                <span class="difficulty-tag medium">Medium</span>
+                            </div>
+    <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+    first_name,
+    last_name,
+    department_id,
+    salary,
+    <span class="sql-function">RANK</span>() <span class="sql-keyword">OVER</span> (<span class="sql-keyword">PARTITION BY</span> department_id <span class="sql-keyword">ORDER BY</span> salary <span class="sql-keyword">DESC</span>) <span class="sql-keyword">AS</span> salary_rank
+<span class="sql-keyword">FROM</span> employees
+<span class="sql-keyword">ORDER BY</span> department_id, salary_rank;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="sql-subsection">
+                        <h4><i class="fas fa-project-diagram"></i> Complex Joins</h4>
+                        <p class="subsection-description">Queries using multiple joins for complex data relationships</p>
+                        
+                        <div class="sql-query-card">
+                            <div class="sql-question">
+                                Find departments where the average salary is higher than the company-wide average salary.
+                                <span class="difficulty-tag hard">Hard</span>
+                            </div>
+    <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> 
+    d.department_id,
+    d.department_name,
+    <span class="sql-function">AVG</span>(e.salary) <span class="sql-keyword">AS</span> avg_department_salary
+<span class="sql-keyword">FROM</span> departments d
+<span class="sql-keyword">JOIN</span> employees e <span class="sql-keyword">ON</span> d.department_id = e.department_id
+<span class="sql-keyword">GROUP BY</span> d.department_id, d.department_name
+<span class="sql-keyword">HAVING</span> <span class="sql-function">AVG</span>(e.salary) > (
+    <span class="sql-keyword">SELECT</span> <span class="sql-function">AVG</span>(salary) 
+    <span class="sql-keyword">FROM</span> employees
+)
+<span class="sql-keyword">ORDER BY</span> avg_department_salary <span class="sql-keyword">DESC</span>;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Library Borrowing Habits Table Queries -->
+                <div class="sql-section">
+                    <h3>
+                        <span class="platform-tag namastesql-tag">NamasteSQL</span>
+                        Library Borrowing Habits Queries
+                    </h3>
+                    <p class="table-schema"><strong>Table Schema:</strong> Books (BookID INT, BookName VARCHAR(30), Genre VARCHAR(20))</p>
+                    <p class="table-schema"><strong>Table Schema:</strong> Borrowers (BorrowersID INT, BorrowerName VARCHAR(10), BookID INT)</p>
+
+                    <div class="sql-query-card">
+                        <div class="sql-question">
+                            Imagine you're working for a library and you're tasked with generating a report on the borrowing habits of patrons. You have two tables in your database: Books and Borrowers. 
+                            <br><br>
+                            Write an SQL to display the name of each borrower along with a comma-separated list of the books they have borrowed in alphabetical order, display the output in ascending order of Borrower Name.
+                            <span class="difficulty-tag medium">Medium</span>
+                        </div>
+    <pre class="sql-code"><code><span class="sql-keyword">SELECT</span> borrowerName,
+    <span class="sql-function">STRING_AGG</span>(bookName, <span class="sql-string">','</span>) <span class="sql-keyword">WITHIN GROUP</span> (<span class="sql-keyword">ORDER BY</span> bookName) <span class="sql-keyword">AS</span> books
+<span class="sql-keyword">FROM</span>
+    borrowers
+<span class="sql-keyword">JOIN</span>
+    books
+<span class="sql-keyword">ON</span>
+    borrowers.bookid = books.bookid
+<span class="sql-keyword">GROUP BY</span>
+    borrowerName
+<span class="sql-keyword">ORDER BY</span>
+        borrowerName;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certification SQL Queries Section -->
+    <section id="certification-sql" class="certification-queries" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Certification SQL Queries</h2>
+            <p class="section-description" style="text-align: center; margin-bottom: 40px;">
+                This section contains solutions to SQL questions from certification programs on platforms like HackerRank, LeetCode, and more, demonstrating advanced SQL proficiency.
+            </p>
+            
+            <div class="certification-container">
+                <div class="certification-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4625/4625793.png" alt="SQL Certification" class="certification-badge">
+                    <h2>SQL Certification Queries</h2>
+                    <p>This section contains solutions to SQL questions from certification programs on platforms like HackerRank, LeetCode, and more, demonstrating advanced SQL proficiency.</p>
+                </div>
+                
+                <!-- HackerRank Certification -->
+                <div class="certification-section">
+                    <h3 class="certification-title">
+                        <img src="HackerRank_Icon-1000px.png" alt="HackerRank" class="certification-icon"> 
+                        <span class="hacker-text">Hacker</span><span class="rank-text">Rank</span>
+                    </h3>
+                    <p class="certification-description">
+                        Solutions to problems from HackerRank's SQL Certification test, covering advanced topics like complex joins, subqueries, and window functions.
+                    </p>
+                    
+                    <div class="query-container">
+                        <div class="query-question">
+                            <div style="text-align: justify; margin-bottom: 8px;">
+                                Weather Analysis: There is a table with daily weather data over the last 6 months of 2020, including the maximum, minimum, and average temperatures. Write a query that gives month, monthly maximum, monthly minimum, monthly average temperatures for the six months.
+                            </div>
+                            <div style="text-align: center; font-style: italic; font-weight: normal; font-size: 0.9em; margin-bottom: 8px;">
+                                Temperature_Records Table: Record_Date VARCHAR(10), Data_Type VARCHAR(3), Data_Value INT
+                            </div>
+                            <div style="text-align: center;">
+                                <span class="difficulty-tag hard">Advanced</span>
+                            </div>
+                        </div>
+                        <pre class="sql-code"><code><span class="sql-keyword">SET</span> NULL <span class="sql-string">"NULL"</span>;
+<span class="sql-keyword">SET</span> FEEDBACK <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> ECHO <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> HEADING <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> WRAP <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> LINESIZE 10000;
+<span class="sql-keyword">SET</span> TAB <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> PAGES 0;
+<span class="sql-keyword">SET</span> DEFINE <span class="sql-keyword">OFF</span>;
+<span class="sql-keyword">SET</span> SERVEROUTPUT <span class="sql-keyword">ON</span>;
+
+<span class="sql-keyword">SELECT</span> 
+    <span class="sql-function">TO_NUMBER</span>(<span class="sql-function">TO_CHAR</span>(<span class="sql-function">TO_DATE</span>(record_date, <span class="sql-string">'YYYY-MM-DD'</span>), <span class="sql-string">'MM'</span>)) <span class="sql-keyword">AS</span> recMonth, 
+    <span class="sql-function">MAX</span>(data_value) <span class="sql-keyword">AS</span> max, 
+    <span class="sql-function">MIN</span>(data_value) <span class="sql-keyword">AS</span> min,
+    <span class="sql-function">round</span>(<span class="sql-function">AVG</span>(<span class="sql-keyword">CASE WHEN</span> data_type = <span class="sql-string">'avg'</span> <span class="sql-keyword">then</span> data_value <span class="sql-keyword">END</span>)) <span class="sql-keyword">AS</span> avg
+<span class="sql-keyword">FROM</span> 
+    temperature_records
+<span class="sql-keyword">WHERE</span> 
+    <span class="sql-function">TO_NUMBER</span>(<span class="sql-function">TO_CHAR</span>(<span class="sql-function">TO_DATE</span>(record_date, <span class="sql-string">'YYYY-MM-DD'</span>), <span class="sql-string">'MM'</span>)) <span class="sql-keyword">BETWEEN</span> 7 <span class="sql-keyword">AND</span> 12
+<span class="sql-keyword">GROUP BY</span> 
+    <span class="sql-function">TO_NUMBER</span>(<span class="sql-function">TO_CHAR</span>(<span class="sql-function">TO_DATE</span>(record_date, <span class="sql-string">'YYYY-MM-DD'</span>), <span class="sql-string">'MM'</span>))
+<span class="sql-keyword">ORDER BY</span> 
+    <span class="sql-function">TO_NUMBER</span>(<span class="sql-function">TO_CHAR</span>(<span class="sql-function">TO_DATE</span>(record_date, <span class="sql-string">'YYYY-MM-DD'</span>), <span class="sql-string">'MM'</span>));
+
+<span class="sql-keyword">exit</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SQL Concepts Section -->
+    <section class="concepts">
+        <div class="container">
+            <h2 class="section-title">SQL Concepts Mastered</h2>
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Database Design</h3>
+                    <p>Expertise in designing normalized database schemas, creating efficient table structures, and implementing proper indexing strategies.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>Advanced Filtering</h3>
+                    <p>Mastery of WHERE clauses, complex conditional statements, and pattern matching using LIKE, IN, BETWEEN, and other operators.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Joins & Relationships</h3>
+                    <p>Deep understanding of INNER JOIN, LEFT/RIGHT JOIN, FULL OUTER JOIN, CROSS JOIN, and self-joins for complex data retrieval.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Aggregate Functions</h3>
+                    <p>Proficient use of SUM, COUNT, AVG, MIN, MAX with GROUP BY and HAVING clauses for data summarization and analysis.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Subqueries & CTEs</h3>
+                    <p>Expertise in using subqueries (correlated and non-correlated) and Common Table Expressions (CTEs) for complex data manipulation.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-window-restore"></i>
+                    </div>
+                    <h3>Window Functions</h3>
+                    <p>Advanced knowledge of ROW_NUMBER, RANK, DENSE_RANK, NTILE, LAG, LEAD, and other window functions for analytical queries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section class="platforms">
+        <div class="container">
+            <h2 class="section-title">Coding Platforms</h2>
+            <div class="platform-cards">
+                <div class="platform-card hackerrank">
+                    <div class="platform-icon">
+                        <i class="fab fa-hackerrank"></i>
+                    </div>
+                    <h3>HackerRank</h3>
+                    <p>6-Star Gold Badge in SQL, solving over 100 challenges with optimal solutions and high efficiency ratings.</p>
+                    <a href="https://www.hackerrank.com/jaythakur32" target="_blank" class="btn btn-hackerrank">View Profile</a>
+                </div>
+                <div class="platform-card leetcode">
+                    <div class="platform-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>LeetCode</h3>
+                    <p>Solved 150+ database problems, ranking in top 15% for execution time and memory optimization.</p>
+                    <a href="https://leetcode.com/u/JayThakur/" target="_blank" class="btn btn-leetcode">View Profile</a>
+                </div>
+                <!-- <div class="platform-card codechef">
+                    <div class="platform-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>CodeChef</h3>
+                    <p>Participated in multiple SQL contests, developing efficient solutions for complex data manipulation challenges.</p>
+                    <a href="https://www.codechef.com/users/jaythakur32" target="_blank" class="btn btn-codechef">View Profile</a>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Modal -->
+    <div id="resumeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="resumeTitle"></h3>
+            <div class="modal-buttons">
+                <a id="viewLink" href="#" target="_blank" class="btn"><i class="fas fa-eye"></i> View</a>
+                <a id="downloadLink" href="#" download class="btn"><i class="fas fa-download"></i> Download</a>
+            </div>
+        </div>
+    </div>    
+
+    <!-- Footer -->
+    <footer>
+        <div class="container" id="footer">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">Jay Thakur</div>
+                    <p>Integration Engineer & Data Analyst</p>
+                    <div class="footer-contact">
+                        <a href="mailto:jaythakur32@gmail.com">
+                            <i class="fas fa-envelope"></i> jaythakur32@gmail.com
+                        </a>
+                        <a href="tel:+918605601777">
+                            <i class="fas fa-phone"></i> +91 8605601777 (India)
+                        </a>
+                        <a href="tel:+447442257155">
+                            <i class="fas fa-phone"></i> +44 7442257155 (UK)
+                        </a>
+                        <a href="https://www.linkedin.com/in/jaythakur37/" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/JyThakur" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#skills">Skills</a>
+                        <a href="#projects">Projects</a>
+                        <a href="https://drive.google.com/file/d/1T6tE7HC8OUxTm4D0az-5qz8UUDOQZ1iO/preview" class="healthcare-dropdown">Integration Engineer Resume</a>
+                        <a href="https://drive.google.com/file/d/1RaNviA_L7eGRML7sNRZLJhgqFKTa-wma/preview" class="analyst-dropdown">Data Analyst Resume</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Profiles</h4>
+                    <div class="footer-links">
+                        <a href="integration-engineer-profile.html" class="healthcare-dropdown">Integration Engineer Page</a>
+                        <a href="data-analyst-profile.html" class="analyst-dropdown">Data Analyst Page</a>
+                        <a href="sql-queries.html">SQL Queries Page</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Jay Thakur. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Profiles Modal -->
+    <div id="profilesModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Choose Profile</h3>
+        <div class="modal-buttons">
+        <a href="integration-engineer-profile.html" target="_blank" class="btn btn-healthcare">
+            <i class="fas fa-hospital"></i> Integration Engineer Profile
+        </a>
+        <a href="data-analyst-profile.html" target="_blank" class="btn btn-analyst">
+            <i class="fas fa-chart-line"></i> Data Analyst Profile
+        </a>
+        </div>
+    </div>
+    </div>
+
+    <!-- Projects Modal -->
+    <div id="projectsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Choose Project Type</h3>
+        <div class="modal-buttons">
+        <a href="integration-engineer-profile.html#projects" target="_blank" class="btn btn-healthcare">
+            <i class="fas fa-hospital"></i> Integration Engineer Projects
+        </a>
+        <a href="data-analyst-profile.html#projects" target="_blank" class="btn btn-analyst">
+            <i class="fas fa-chart-line"></i> Data Analyst Projects
+        </a>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('show');
+        });
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show/hide sections based on tab
+                const tabName = tab.getAttribute('data-tab');
+                if (tabName === 'basic') {
+                    document.getElementById('basic-sql').style.display = 'block';
+                    document.getElementById('certification-sql').style.display = 'none';
+                } else if (tabName === 'certification') {
+                    document.getElementById('basic-sql').style.display = 'none';
+                    document.getElementById('certification-sql').style.display = 'block';
+                }
+            });
+        });
+        
+    // Resume Modal Functionality
+    const modal = document.getElementById("resumeModal");
+    const resumeTitle = document.getElementById("resumeTitle");
+    const viewLink = document.getElementById("viewLink");
+    const downloadLink = document.getElementById("downloadLink");
+    const closeBtn = document.querySelector(".modal .close");
+
+    // Resume links data
+    const resumeData = {
+        integration: {
+            title: "Integration Engineer Resume",
+            view: "https://drive.google.com/file/d/1T6tE7HC8OUxTm4D0az-5qz8UUDOQZ1iO/preview",
+            download: "https://drive.google.com/uc?export=download&id=1T6tE7HC8OUxTm4D0az-5qz8UUDOQZ1iO"
+        },
+        analyst: {
+            title: "Data Analyst Resume",
+            view: "https://drive.google.com/file/d/1RaNviA_L7eGRML7sNRZLJhgqFKTa-wma/preview",
+            download: "https://drive.google.com/uc?export=download&id=1RaNviA_L7eGRML7sNRZLJhgqFKTa-wma"
+        }
+    };
+
+    // Open modal on click
+    document.querySelectorAll(".resume-link").forEach(link => {
+        link.addEventListener("click", e => {
+            e.preventDefault();
+            const role = link.getAttribute("data-role");
+            const data = resumeData[role];
+            resumeTitle.textContent = data.title;
+            viewLink.href = data.view;
+            downloadLink.href = data.download;
+            modal.style.display = "flex";
+        });
+    });
+
+    // Close modal
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => {
+        if (e.target === modal) modal.style.display = "none";
+    };  
+    
+    
+    // Generic modal functionality
+    document.querySelectorAll(".popup-trigger").forEach(trigger => {
+    trigger.addEventListener("click", e => {
+        e.preventDefault();
+        const modalId = trigger.getAttribute("data-modal");
+        const modal = document.getElementById(modalId);
+        if (modal) modal.style.display = "flex";
+    });
+    });
+
+    // Close modals
+    document.querySelectorAll(".modal .close").forEach(btn => {
+    btn.addEventListener("click", () => {
+        btn.closest(".modal").style.display = "none";
+    });
+    });
+
+    // Close modal when clicking outside content
+    window.addEventListener("click", e => {
+    if (e.target.classList.contains("modal")) {
+        e.target.style.display = "none";
+    }
+    });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('menu').classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
