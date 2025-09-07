@@ -810,8 +810,8 @@
                             </a>
                         </li>
                     </li>   
-                    <li>
-                        <a href="#resume">Resume <i class="fas fa-chevron-down"></i></a>
+                    <li class="dropdown-parent">
+                        <a href="#resume" class="dropdown-toggle">Resume <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown">
                             <li>
                                 <a href="#" class="resume-link healthcare-dropdown" data-role="integration">
@@ -835,7 +835,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="container hero-content">
             <h1 class="hero-title">SQL Queries Master</h1>
             <h2 class="hero-subtitle">Comprehensive Collection of SQL Solutions</h2>
@@ -844,7 +844,7 @@
     </section>
 
     <!-- Tabs Section -->
-    <section class="tabs-section">
+    <section class="tabs-section" id="queries-tabs">
         <div class="container">
             <div class="tabs">
                 <div class="tab active" data-tab="basic">Basic SQL Queries</div>
@@ -1160,7 +1160,7 @@
                 <!-- HackerRank Certification -->
                 <div class="certification-section">
                     <h3 class="certification-title">
-                        <img src="HackerRank_Icon-1000px.png" alt="HackerRank" class="certification-icon"> 
+                        <img src="hackerrank_logo.png" alt="HackerRank" class="certification-icon"> 
                         <span class="hacker-text">Hacker</span><span class="rank-text">Rank</span>
                     </h3>
                     <p class="certification-description">
@@ -1263,7 +1263,7 @@
     </section>
 
     <!-- Platform Section -->
-    <section class="platforms">
+    <section class="platforms" id="codeing-platforms">
         <div class="container">
             <h2 class="section-title">Coding Platforms</h2>
             <div class="platform-cards">
@@ -1335,10 +1335,9 @@
                 <div>
                     <h4>Quick Links</h4>
                     <div class="footer-links">
-                        <a href="#home">Home</a>
-                        <a href="#about">About</a>
-                        <a href="#skills">Skills</a>
-                        <a href="#projects">Projects</a>
+                        <a href="#home">Introduction</a>
+                        <a href="#queries-tabs">Queries</a>
+                        <a href="#coding-platforms">Coding Platforms</a>
                         <a href="https://drive.google.com/file/d/1T6tE7HC8OUxTm4D0az-5qz8UUDOQZ1iO/preview" class="healthcare-dropdown">Integration Engineer Resume</a>
                         <a href="https://drive.google.com/file/d/1RaNviA_L7eGRML7sNRZLJhgqFKTa-wma/preview" class="analyst-dropdown">Data Analyst Resume</a>
                     </div>
@@ -1394,6 +1393,69 @@
         // Mobile menu toggle
         document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
             document.getElementById('menu').classList.toggle('show');
+        });
+        
+        // Enhanced dropdown functionality for all devices
+        function setupDropdowns() {
+            const dropdownParents = document.querySelectorAll('.dropdown-parent');
+            
+            dropdownParents.forEach(parent => {
+                const dropdown = parent.querySelector('.dropdown');
+                const link = parent.querySelector('.dropdown-toggle');
+                
+                // For desktop - maintain hover functionality
+                if (window.innerWidth > 992) {
+                    parent.addEventListener('mouseenter', function() {
+                        dropdown.style.display = 'block';
+                    });
+                    
+                    parent.addEventListener('mouseleave', function() {
+                        dropdown.style.display = 'none';
+                    });
+                    
+                    // Prevent click behavior on desktop
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth > 992) {
+                            e.preventDefault();
+                        }
+                    });
+                } else {
+                    // For mobile/touch devices
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const isVisible = dropdown.style.display === 'block';
+                        
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown').forEach(d => {
+                            if (d !== dropdown) {
+                                d.style.display = 'none';
+                            }
+                        });
+                        
+                        // Toggle current dropdown
+                        dropdown.style.display = isVisible ? 'none' : 'block';
+                    });
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown-parent') && window.innerWidth <= 992) {
+                    document.querySelectorAll('.dropdown').forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            });
+        }
+
+        // Initialize dropdowns on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupDropdowns();
+            
+            // Reinitialize on window resize
+            window.addEventListener('resize', function() {
+                setupDropdowns();
+            });
         });
         
         // Tab functionality

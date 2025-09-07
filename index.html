@@ -269,10 +269,11 @@
         }
         
         .hero-image {
-            width: 180px;
-            height: 180px;
+            width: 220px; /* Increased from 180px */
+            height: 220px; /* Increased from 180px */
             border-radius: 50%;
             object-fit: cover;
+            object-position: center top; /* Ensures proper positioning */
             border: 5px solid white;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
@@ -857,8 +858,8 @@
                         </a>
                     </li>
                     <li> <a href="sql-queries.html">SQL Queries </a></li>
-                    <li>
-                        <a href="#resume">Resume <i class="fas fa-chevron-down"></i></a>
+                    <li class="dropdown-parent">
+                        <a href="#resume" class="dropdown-toggle">Resume <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown">
                             <li>
                                 <a href="#" class="resume-link healthcare-dropdown" data-role="integration">
@@ -887,7 +888,7 @@
             <img src="Jay Thakur.jpg" alt="Jay Thakur" class="hero-image">
             <h1 class="hero-title">Jay Thakur</h1>
             <h2 class="hero-subtitle">Integration Engineer & Data Analyst</h2>
-            <p>Specializing in HL7 Interface Integration and Healthcare IT systems with strong expertise in data analysis, SQL, and business intelligence.</p>
+            <p>HL7 integration engineer & data analyst — HL7 v2.5, FHIR, EMR integration, SQL & Power BI. Building interfaces and dashboards for healthcare IT.</p>
             <div class="hero-buttons">
                 <a href="integration-engineer-profile.html" target="_blank" class="btn btn-healthcare">Integration Engineer Profile</a>
                 <a href="data-analyst-profile.html" target="_blank" class="btn btn-analyst">Data Analyst Profile</a>
@@ -1134,7 +1135,7 @@
                 <div>
                     <h4>Quick Links</h4>
                     <div class="footer-links">
-                        <a href="#home">Home</a>
+                        <a href="#home">Introduction</a>
                         <a href="#about">About</a>
                         <a href="#skills">Skills</a>
                         <a href="#projects">Projects</a>
@@ -1158,32 +1159,46 @@
     </footer>
 
 <script>
-    // Mobile menu toggle functionality
-    document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-        const menu = document.getElementById('menu');
-        menu.classList.toggle('show');
-        
-        // Close all open dropdowns when toggling menu
-        if (!menu.classList.contains('show')) {
-            document.querySelectorAll('.dropdown').forEach(dropdown => {
-                dropdown.style.display = 'none';
-            });
-        }
-    });
-
-    // Enhanced dropdown functionality for touch devices
-    function setupDropdowns() {
-        const isTouchDevice = 'ontouchstart' in window;
-        const dropdownParents = document.querySelectorAll('nav ul li:has(.dropdown)');
-        
-        dropdownParents.forEach(parent => {
-            const dropdown = parent.querySelector('.dropdown');
-            const link = parent.querySelector('a');
+        // Mobile menu toggle functionality
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
             
-            if (isTouchDevice || window.innerWidth <= 992) {
-                // For touch devices or smaller screens
-                link.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 992) {
+            // Close all open dropdowns when toggling menu
+            if (!menu.classList.contains('show')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
+
+        // Enhanced dropdown functionality for all devices
+        function setupDropdowns() {
+            const dropdownParents = document.querySelectorAll('.dropdown-parent');
+            
+            dropdownParents.forEach(parent => {
+                const dropdown = parent.querySelector('.dropdown');
+                const link = parent.querySelector('.dropdown-toggle');
+                
+                // For desktop - maintain hover functionality
+                if (window.innerWidth > 992) {
+                    parent.addEventListener('mouseenter', function() {
+                        dropdown.style.display = 'block';
+                    });
+                    
+                    parent.addEventListener('mouseleave', function() {
+                        dropdown.style.display = 'none';
+                    });
+                    
+                    // Prevent click behavior on desktop
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth > 992) {
+                            e.preventDefault();
+                        }
+                    });
+                } else {
+                    // For mobile/touch devices
+                    link.addEventListener('click', function(e) {
                         e.preventDefault();
                         const isVisible = dropdown.style.display === 'block';
                         
@@ -1196,41 +1211,29 @@
                         
                         // Toggle current dropdown
                         dropdown.style.display = isVisible ? 'none' : 'block';
-                    }
-                });
-            } else {
-                // For desktop - maintain hover functionality
-                parent.addEventListener('mouseenter', function() {
-                    dropdown.style.display = 'block';
-                });
-                
-                parent.addEventListener('mouseleave', function() {
-                    dropdown.style.display = 'none';
-                });
-            }
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 992) {
-                if (!e.target.closest('nav ul li:has(.dropdown)')) {
+                    });
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown-parent') && window.innerWidth <= 992) {
                     document.querySelectorAll('.dropdown').forEach(dropdown => {
                         dropdown.style.display = 'none';
                     });
                 }
-            }
-        });
-    }
+            });
+        }
 
-    // Initialize dropdowns on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        setupDropdowns();
-        
-        // Reinitialize on window resize
-        window.addEventListener('resize', function() {
+        // Initialize dropdowns on page load
+        document.addEventListener('DOMContentLoaded', function() {
             setupDropdowns();
+            
+            // Reinitialize on window resize
+            window.addEventListener('resize', function() {
+                setupDropdowns();
+            });
         });
-    });
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
